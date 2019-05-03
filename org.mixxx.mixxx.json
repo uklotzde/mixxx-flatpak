@@ -1,0 +1,472 @@
+{
+    "app-id": "org.mixxx.mixxx",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.12",
+    "sdk": "org.kde.Sdk",
+    "command": "mixxx",
+    "finish-args": [
+        "--share=ipc",
+        "--share=network",
+        "--socket=x11",
+        "--filesystem=home",
+        "--device=all"
+    ],
+    "modules": [
+
+        {
+            "name": "libid3tag",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/mad/files/libid3tag/0.15.1b/libid3tag-0.15.1b.tar.gz/download",
+                    "dest-filename": "libid3tag.tar.gz",
+                    "md5": "e5808ad997ba32c498803822078748c3"
+                }
+            ]
+        },
+
+        {
+            "name": "mp4v2",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sources.archlinux.org/other/packages/libmp4v2/mp4v2-2.0.0.tar.bz2",
+                    "sha256": "0319b9a60b667cf10ee0ec7505eb7bdc0a2e21ca7a93db96ec5bd758e3428338"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/libmp4v2-c++11.patch"
+                }
+            ]
+        },
+
+        {
+            "name": "faad",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/sourceforge/faac/faad2-2.8.8.tar.gz",
+                    "md5": "28f6116efdbe9378269f8a6221767d1f"
+                }
+            ]
+        },
+
+
+        {
+            "name": "libmad",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/mad/files/libmad/0.15.1b/libmad-0.15.1b.tar.gz/download",
+                    "dest-filename": "libmad.tar.gz",
+                    "sha512": "2cad30347fb310dc605c46bacd9da117f447a5cabedd8fefdb24ab5de641429e5ec5ce8af7aefa6a75a3f545d3adfa255e3fa0a2d50971f76bc0c4fc0400cc45"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/amd64-64bit.diff"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/libmad.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/frame_length.diff"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/optimize.diff"
+                }
+            ]
+        },
+
+        {
+            "name": "portaudio",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz",
+                    "md5": "4df8224e047529ca9ad42f0521bf81a8"
+                }
+            ]
+        },
+
+        {
+            "name": "libogg",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.xiph.org/releases/ogg/libogg-1.3.3.tar.xz",
+                    "sha256": "4f3fc6178a533d392064f14776b23c397ed4b9f48f5de297aba73b643f955c08"
+                }
+            ]
+        },
+
+        {
+            "name": "libvorbis",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.xz",
+                    "sha256": "af00bb5a784e7c9e69f56823de4637c350643deedaf333d0fa86ecdba6fcb415"
+                }
+            ]
+        },
+
+        {
+            "name": "libflac",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.xiph.org/releases/flac/flac-1.3.2.tar.xz",
+                    "sha256": "91cfc3ed61dc40f47f050a109b08610667d73477af6ef36dcad31c31a4a8d53f"
+                }
+            ]
+        },
+
+        {
+            "name": "libsndfile",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz",
+                    "sha256": "1ff33929f042fa333aed1e8923aa628c3ee9e1eb85512686c55092d1e5a9dfa9"
+                }
+            ]
+        },
+
+        {
+            "name": "libshout",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.xiph.org/releases/libshout/libshout-2.4.1.tar.gz",
+                    "md5": "89cebf8cb0197f639cde69c95177fe47"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "sed -e 's/SSLeay_add_all_algorithms/OpenSSL_add_all_algorithms/g' -i src/tls.c"
+                    ]
+                }
+            ]
+        },
+
+        {
+            "name": "taglib",
+            "buildsystem": "cmake",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DBUILD_SHARED_LIBS=ON",
+                "-DWITH_MP4=ON",
+                "-DWITH_ASF=ON"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://taglib.github.io/releases/taglib-1.11.1.tar.gz",
+                    "md5": "cee7be0ccfc892fa433d6c837df9522a"
+                }
+            ]
+        },
+
+        {
+            "name": "protobuf",
+            "cleanup": [
+                "protoc",
+                "/bin",
+                "/doc",
+                "/lib/plugins"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/google/protobuf/releases/download/v3.6.1/protobuf-cpp-3.6.1.tar.gz",
+                    "md5": "406d5b8636576b1c86730ca5cbd1e576"
+                }
+            ]
+        },
+
+        {
+            "name": "vamp-sdk",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://code.soundsoftware.ac.uk/attachments/download/2206/vamp-plugin-sdk-2.7.1.tar.gz",
+                    "sha512": "91dd7cae72334718dcbdac06b1ffa3f3ba76e977b82b928ab634d9982aa15ca4e30978a7778215753c61e56831077d7634d24e65e468ab6a8a87a5957fb09bf3"
+                }
+            ]
+        },
+
+        {
+            "name": "libchromaprint",
+            "buildsystem": "cmake",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/acoustid/chromaprint/releases/download/v1.4.3/chromaprint-1.4.3.tar.gz",
+                    "sha256": "ea18608b76fb88e0203b7d3e1833fb125ce9bb61efe22c6e169a50c52c457f82"
+                }
+            ]
+        },
+
+        {
+            "name": "tcl",
+            "disabled": true,
+            "subdir": "unix",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/sourceforge/tcl/tcl8.6.9-src.tar.gz",
+                    "sha256": "ad0cd2de2c87b9ba8086b43957a0de3eb2eb565c7159d5f53ccbba3feb915f4e"
+                }
+            ]
+        },
+
+
+        {
+            "name": "sqlite3",
+            "disabled": true,
+            "config-opts": [
+                "--disable-tcl",
+                "--disable-amalgamation",
+                "--enable-fts3",
+                "--enable-fts4",
+                "--enable-fts5",
+                "--enable-rtree",
+                "--enable-json1" ],
+                "sources": [
+                    {
+                        "type": "archive",
+                        "url": "https://www.sqlite.org/2018/sqlite-src-3240000.zip",
+                        "sha1": "fb558c49ee21a837713c4f1e7e413309aabdd9c7"
+                    }
+                ]
+        },
+
+        {
+            "name": "scons",
+            "cleanup": [ "*" ],
+            "buildsystem": "simple",
+            "build-commands": [ "python2 setup.py install --standard-lib --prefix=/app --install-data=/app/share --optimize=1" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/sourceforge/scons/scons-3.0.1.tar.gz",
+                    "md5": "b6a292e251b34b82c203b56cfa3968b3"
+                }
+            ]
+        },
+
+        {
+            "name": "glu",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "ftp://ftp.freedesktop.org/pub/mesa/glu/glu-9.0.0.tar.bz2",
+                    "sha256": "1f7ad0d379a722fcbd303aa5650c6d7d5544fde83196b42a73d1193568a4df12"
+                }
+            ]
+        },
+
+        {
+            "name": "lv",
+            "modules": [
+                {
+                    "name": "lv2",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "python2 waf configure --prefix=/app",
+                        "python2 waf build",
+                        "python2 waf install"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://lv2plug.in/spec/lv2-1.14.0.tar.bz2",
+                            "sha512": "6991d848ed9f04a48ca3070efc15af83431f680aa8a8559a02b1666f7b8d43af8e089f78c3b14ad3345dac32fd1c8ad0faf3a3f56dddc07c6f0e0aeef4077498"
+                        }
+                    ]
+                },
+                {
+                    "name": "serd",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "python2 waf configure --prefix=/app",
+                        "python2 waf build",
+                        "python2 waf install"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://download.drobilla.net/serd-0.30.0.tar.bz2",
+                            "sha512": "23ff30f2d3dd622bdd65deee36cb92ae5f4a0c539cf32a1bd9802f2d7cf4aa3e96f25d2fe579277d1ab943f6d25c0be68d7b4863f83d4733f489462620a4c1bb"
+                        }
+                    ]
+                },
+                {
+                    "name": "sord",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "python2 waf configure --prefix=/app",
+                        "python2 waf build",
+                        "python2 waf install"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://download.drobilla.net/sord-0.16.2.tar.bz2",
+                            "sha512": "fe143c07ed18c15ffaf2461ca587df76e365a075f5d93f5eaa4c26196e0b1dd59d24d16e176de3664a2658377a2934083af5742c80884e8e7dd201dcaccb9698"
+                        }
+                    ]
+                },
+                {
+                    "name": "sratom",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "python2 waf configure --prefix=/app",
+                        "python2 waf build",
+                        "python2 waf install"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://download.drobilla.net/sratom-0.6.2.tar.bz2",
+                            "sha512": "356e1dfde07fcc3eff99186ff79501557572f5d73338fd096bf639a82d1d4fe3c0e790627c8eb088053e4a2aeed4e548aca0a5572d1ab26316cfdb13374f10ac"
+                        }
+                    ]
+                },
+                {
+                    "name": "lilv",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "python2 waf configure --prefix=/app --no-bash-completion --no-utils",
+                        "python2 waf build",
+                        "python2 waf install"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://download.drobilla.net/lilv-0.24.4.tar.bz2",
+                            "sha512": "cb909c83dbac36b51a206fe508aec51e52ddf068f9a159d053888594402def8d140aae0d9e1e1866e722396f7ec8dea4b86d4c1b958f56eb3193b78307918a89"
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "name": "rubberband",
+            "modules": [
+                {
+                    "name": "fftw",
+                    "config-opts": [ "--enable-shared", "--enable-threads", "--enable-openmp", "--enable-sse2", "--enable-avx" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://www.fftw.org/fftw-3.3.8.tar.gz",
+                            "sha1": "59831bd4b2705381ee395e54aa6e0069b10c3626"
+                        }
+                    ]
+                },
+                {
+                    "name": "ladspa",
+                    "buildsystem": "simple",
+                    "build-commands": [ "install ladspa.h.txt /app/include/ladspa.h" ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://www.ladspa.org/ladspa_sdk/ladspa.h.txt",
+                            "md5": "7550280c79d24228361a9762b63e5b7e"
+                        }
+                    ]
+                },
+                {
+                    "name": "librubbeband",
+                    "build-commands": [ "sed -i '/cp -f \\$(JNI_TARGET/d' Makefile" ],
+                        "sources": [
+                            {
+                                "type": "archive",
+                                "url": "https://github.com/breakfastquay/rubberband/archive/v1.8.2.tar.gz",
+                                "sha512": "b70e41fb1f68487d67b3935682100138ba898adeec9c8e7f8caa30f7bc94389c847d72a1b0b04f042d16d4b57019cc82c0fe79c8f302c3174e603e9bd0289abf"
+                            }
+                        ]
+                }
+            ]
+        },
+
+        {
+            "name": "libusb",
+            "buildsystem": "autotools",
+            "config-opts": [ "--disable-udev" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/libusb/libusb/releases/download/v1.0.22/libusb-1.0.22.tar.bz2",
+                    "sha256": "75aeb9d59a4fdb800d329a545c2e6799f732362193b465ea198f2aa275518157"
+                }
+            ]
+        },
+
+        {
+            "name": "portmidi",
+            "buildsystem": "cmake",
+            "post-install": [ "ln -s libportmidi.so /app/lib/libporttime.so" ],
+            "config-opts": [
+                "-DCMAKE_INSTALL_PREFIX=/app",
+                "-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=Release",
+                "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=Release",
+                "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=Release"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://sourceforge.net/projects/portmedia/files/latest/download",
+                    "dest-filename": "portmidi.zip",
+                    "sha256": "08e9a892bd80bdb1115213fb72dc29a7bf2ff108b378180586aa65f3cfd42e0f"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ 
+                        "sed -i '/pm_java/d ' CMakeLists.txt",
+                        "sed -i '/JAVA/d' pm_common/CMakeLists.txt",
+                        "sed -i '/JNI/d' pm_common/CMakeLists.txt",
+                        "sed -i '/INSTALL/s/pmjni//' pm_common/CMakeLists.txt",
+                        "sed -i '/pmjni/d' pm_common/CMakeLists.txt",
+                        "sed -i '/LIBRARY DESTINATION/s|/usr/local/lib|/app/lib|' pm_common/CMakeLists.txt",
+                        "sed -i '/ARCHIVE DESTINATION/s|/usr/local/lib|/app/lib|' pm_common/CMakeLists.txt",
+                        "sed -i '/LIBRARY DESTINATION/s|/usr/local/lib|/app/lib|' pm_dylib/CMakeLists.txt",
+                        "sed -i '/ARCHIVE DESTINATION/s|/usr/local/lib|/app/lib|' pm_dylib/CMakeLists.txt",
+                        "sed -i 's|DESTINATION /usr/local/include|DESTINATION /app/include|' pm_dylib/CMakeLists.txt"
+                    ]
+                }
+            ]
+        },
+
+        {
+            "name": "mixxx",
+            "buildsystem": "simple",
+            "build-commands": [
+                "scons -j${FLATPAK_BUILDER_N_JOBS} prefix=/app virtualize=0 localecompare=1 opus=0 build=release battery=0 faad=1 qtdir=/app install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/mixxxdj/mixxx/archive/release-2.2.1.tar.gz",
+                    "md5": "ef72d4b594f9f3dbafd1e264be89fbdc"
+                }
+            ]
+        }
+    ]
+}
