@@ -14,3 +14,9 @@ After some hours you can run Mixxx via
 ````
 flatpak run org.mixxx.mixxx
 ````
+
+# Issues
+As wanted first to check out if it works there some not-done details:
+- builds without opus support
+- builds without JACK support
+- mostly untested, but it plays
